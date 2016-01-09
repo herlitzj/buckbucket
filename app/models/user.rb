@@ -4,9 +4,18 @@ class User < ActiveRecord::Base
     class << self
       def from_omniauth(auth_hash)
         user = find_or_create_by(uid: auth_hash['uid'], provider: auth_hash['provider'])
-        user.name = auth_hash['info']['name']
-        user.location = auth_hash['info']['location']
-        user.email = auth_hash['info']['email']
+            user.name = auth_hash['info']['name']
+        if user.provider == 'google'
+            user.email = auth_hash['info']['email']
+        elsif user.provider == 'twitter'
+            user.location = auth_hash['info']['location']
+            user.nickname = auth_hash['info']['nickname']
+            user.url = auth_hash['info']['urls']['Twitter']
+        elsif user.provider == 'facebook'
+            user.email = auth_hash['info']['email']
+            user.location = auth_hash['info']['location']
+            user.url = auth_hash['info']['urls']['Facebook']
+        end
         user.save!
         user
       end
