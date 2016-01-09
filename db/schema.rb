@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160107201912) do
+ActiveRecord::Schema.define(version: 20160109143523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,9 +28,22 @@ ActiveRecord::Schema.define(version: 20160107201912) do
 
   add_index "markers", ["user_id"], name: "index_markers_on_user_id", using: :btree
 
+  create_table "tokens", force: :cascade do |t|
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.datetime "expires_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "name"
+    t.string   "uid"
+    t.string   "provider"
+    t.string   "location"
+    t.string   "email"
   end
 
 end
