@@ -1,5 +1,4 @@
-<% @marker = create_marker %>
-<%= form_for @marker, :html => {:class => "marker_form", :id => "info_window_form"}  do |f| %>
+<%= form_for(@marker)  do |f| %>
   <% if @marker.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@marker.errors.count, "error") %> prohibited this marker from being saved:</h2>
@@ -17,8 +16,8 @@
     <%= f.text_field :title %><br>
     <%= f.label :description %><br>
     <%= f.text_area :description %><br>
-    <%= f.text_field :lat, :id => 'latitude_field' %><br>
-    <%= f.text_field :lon, :id => 'longitude_field' %><br>
-    <%= f.submit %>
+    <%= f.hidden_field :lat %><br>
+    <%= f.hidden_field :lon %><br>
+    <%= f.submit "Submit" %>
   </div>
 <% end %>

@@ -36,7 +36,7 @@ function addMarker(location) {
     map: map
   });
   var infowindow = new google.maps.InfoWindow({
-      content: document.getElementById('info_window_form')
+      content: document.getElementById('marker_create_form')
      });
     document.getElementById('latitude_field').value = location.lat();
     document.getElementById('longitude_field').value = location.lng();
