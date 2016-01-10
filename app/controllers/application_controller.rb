@@ -7,5 +7,9 @@ class ApplicationController < ActionController::Base
       @current_user ||= User.find_by(id: session[:user_id])
     end
 
-    helper_method :current_user
+    def create_marker
+        @marker = Marker.new
+    end
+
+    helper_method :current_user, :create_marker
 end

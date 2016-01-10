@@ -22,34 +22,27 @@ function initMap() {
   // This event listener will call addMarker() when the map is clicked.
   map.addListener('click', function(event) {
     addMarker(event.latLng);
+      
   });
 
-  // Adds a marker at the center of the map.
-  addMarker(haightAshbury);
-
 }
-
-
-// var infowindow = new google.maps.InfoWindow({
-//   content: "TEST"
-//  });
-
 
 // Adds a marker to the map and push to the array.
 function addMarker(location) {
   var location = location;
-  console.log(location);
-  var infowindow;
   var marker = new google.maps.Marker({
     position: location,
     title: String(location),
     map: map
   });
+  var infowindow = new google.maps.InfoWindow({
+      content: document.getElementById('info_window_form')
+     });
+    document.getElementById('latitude_field').value = location.lat();
+    document.getElementById('longitude_field').value = location.lng();
+    infowindow.open(map, marker);
   markers.push(marker);
   marker.addListener('click', function(location) {
-    infowindow = new google.maps.InfoWindow({
-    content: "TEST"
-   });
     infowindow.open(map, marker);
   });
 }
