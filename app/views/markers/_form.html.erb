@@ -16,8 +16,8 @@
     <%= f.text_field :title %><br>
     <%= f.label :description %><br>
     <%= f.text_area :description %><br>
-    <%= f.hidden_field :lat %><br>
-    <%= f.hidden_field :lon %><br>
+    <%= f.text_field :lat, value: params[:lat] %><br>
+    <%= f.text_field :lon, value: params[:lon] %><br>
     <%= f.submit "Submit" %>
   </div>
 <% end %>

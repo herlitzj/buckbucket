@@ -10,6 +10,7 @@ class MarkersController < ApplicationController
   # GET /markers/1
   # GET /markers/1.json
   def show
+    @marker = Marker.find(params[:id])
   end
 
   # GET /markers/new
@@ -28,7 +29,7 @@ class MarkersController < ApplicationController
 
     respond_to do |format|
       if @marker.save
-        format.html { redirect_to edit_marker_path(@marker), notice: 'Marker was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Marker was successfully created.' }
         format.json { render :show, status: :created, location: @marker }
       else
         format.html { render :new }

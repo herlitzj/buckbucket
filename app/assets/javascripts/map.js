@@ -21,30 +21,24 @@ function initMap() {
   }
 
 
-  for(var i=0; i<all_markers_json.length; i++) {
-    var latLng = { lat: all_markers_json[i].lat, lng: all_markers_json[i].lng };
+  for(var i in all_markers_json) {
+    var values = all_markers_json[i];
+    var latLng = new google.maps.LatLng(values.lat, values.lng);
+    var content_string = "<h4><b>" + values.title + "</b></h4>" +
+                     "<p>" + values.description + "</p>" + 
+                     "<a href='/markers/" + values.id + "'>Click Here</a>";
     var marker = new google.maps.Marker({
         position: latLng,
         map: map,
-        title: all_markers_json[i].marker_title,
-        infoWindow: all_markers_json[i].infowindow
+        clickable: true,
     });
-    markers.push(marker);
+    attachMarkerInfo(marker, content_string);
   };
 
   // This event listener will call addMarker() when the map is clicked.
   map.addListener('click', function(event) {
     addMarker(event.latLng);
-      
-  });
-
-  marker.addListener('click', function() {
-    infowindow.close()
-    var infowindow = new google.maps.InfoWindow({
-    content: marker.infoWindow
-    });
-    infowindow.open(map, marker);
-  });
+  });  
 
 }
 
@@ -66,6 +60,16 @@ function addMarker(location) {
   markers.push(marker);
   marker.addListener('click', function(location) {
     infowindow.open(map, marker);
+  });
+}
+
+function attachMarkerInfo(marker, markerInfo) {
+  var infowindow = new google.maps.InfoWindow({
+    content: markerInfo
+  });
+
+  marker.addListener('click', function() {
+    infowindow.open(marker.get('map'), marker);
   });
 }
 

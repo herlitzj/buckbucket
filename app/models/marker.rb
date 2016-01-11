@@ -6,7 +6,7 @@ class Marker < ActiveRecord::Base
         marker_array = []
 
         all_markers.each do |marker|
-            marker_hash = {:lat=>marker.lat.to_f, :lng=>marker.lon.to_f, :id=>marker.id, :infowindow=>marker.description,
+            marker_hash = {:lat=>marker.lat.to_f, :lng=>marker.lon.to_f, :id=>marker.id, :description=>marker.description,
                             :title=>marker.title, }
             marker_array.append(marker_hash)
         end
