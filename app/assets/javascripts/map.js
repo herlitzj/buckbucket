@@ -3,6 +3,7 @@
 // The user can then click an option to hide, show or delete the markers.
 var map;
 var markers = [];
+var all_markers_json = gon.all_markers_json;
 
 function initMap() {
 
@@ -20,17 +21,14 @@ function initMap() {
   }
 
 
-  var all_markers = gon.all_markers;
-
-  for(var i=0; i<all_markers.length; i++) {
-    var latLng = { lat: all_markers[i].lat, lng: all_markers[i].lon };
+  for(var i=0; i<all_markers_json.length; i++) {
+    var latLng = { lat: all_markers_json[i].lat, lng: all_markers_json[i].lng };
     var marker = new google.maps.Marker({
         position: latLng,
         map: map,
-        title: gon.all_markers[i].marker_title,
-        desc: gon.all_markers[i].infowindow
+        title: all_markers_json[i].marker_title,
+        infoWindow: all_markers_json[i].infowindow
     });
-    console.log(marker.desc)
     markers.push(marker);
   };
 
@@ -41,8 +39,9 @@ function initMap() {
   });
 
   marker.addListener('click', function() {
+    infowindow.close()
     var infowindow = new google.maps.InfoWindow({
-    content: marker.desc
+    content: marker.infoWindow
     });
     infowindow.open(map, marker);
   });
