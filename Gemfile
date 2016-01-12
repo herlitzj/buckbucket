@@ -1,4 +1,6 @@
 source 'https://rubygems.org'
+
+ruby '2.1.7'
 gem 'rails', '4.2.5'
 gem 'pg', '~> 0.15'
 gem 'sass-rails', '~> 5.0'
@@ -17,6 +19,7 @@ gem 'omniauth-facebook'
 gem 'json'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'gon'
+gem 'unicorn'
 
 group :development, :test do
   gem 'byebug'
