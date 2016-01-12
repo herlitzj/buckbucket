@@ -51,10 +51,12 @@ function addMarker(location) {
     map: map
   });
   var infowindow = new google.maps.InfoWindow({
-      content: document.getElementById('marker_create_form')
+        content: '<a href="/markers/new?lat=' + String(location.lat()) + '&lng=' + 
+                String(location.lng()) + '" class="button">Drop a buck</a>',
+        maxWidth: 200
      });
-  document.getElementById('latitude_field').value = location.lat();
-  document.getElementById('longitude_field').value = location.lng();
+  // document.getElementById('latitude_field').value = location.lat();
+  // document.getElementById('longitude_field').value = location.lng();
   clearMarkers();
   infowindow.open(map, marker);
   markers.push(marker);
@@ -65,7 +67,8 @@ function addMarker(location) {
 
 function attachMarkerInfo(marker, markerInfo) {
   var infowindow = new google.maps.InfoWindow({
-    content: markerInfo
+    content: markerInfo,
+    maxWidth: 200
   });
 
   marker.addListener('click', function() {
