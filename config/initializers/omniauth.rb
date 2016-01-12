@@ -3,4 +3,5 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     image_aspect_ratio: 'square', image_size: 48, access_type: 'online', name: 'google'
   provider :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET']
   provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
+  provider :venmo, ENV['VENMO_CLIENT_ID'], ENV['VENMO_CLIENT_SECRET']
 end

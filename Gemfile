@@ -16,6 +16,7 @@ gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
+gem 'omniauth-venmo'
 gem 'json'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'gon'
