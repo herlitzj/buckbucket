@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
             user.email = auth_hash['info']['email']
         elsif user.provider =='venmo'
             user.email = auth_hash['info']['email']
-            user.name = auth_hash['name']
+            user.name = auth_hash['info']['name']
             user.phone = auth_hash['info']['phone']
             user.venmo_token = auth_hash['credentials']['token']
             user.venmo_refresh_token = auth_hash['credentials']['refresh_token']
