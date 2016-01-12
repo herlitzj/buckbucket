@@ -4,24 +4,32 @@
 var map;
 var markers = [];
 var all_markers_json = gon.all_markers_json;
+var single_marker_json = gon.single_marker_json
 
 function initMap() {
 
-  map = new google.maps.Map(document.getElementById('main_map'), {
-    zoom: 12,
-    mapTypeId: google.maps.MapTypeId.STREET
-  });
+  if (document.getElementById('main_map')!==null) {
+    loadMainMap();
+  } else if (document.getElementById('marker_map')!==null) {
+    loadSingleMarkerMap();
+  };
 
-  //recenters map on Geolocation of user if it can find a geolocation
-  if (navigator.geolocation) {
+}
+
+function loadMainMap() {
+  map = new google.maps.Map(document.getElementById('main_map'), {
+      zoom: 12,
+      mapTypeId: google.maps.MapTypeId.STREET
+    });
+      //recenters map on Geolocation of user if it can find a geolocation
+    if (navigator.geolocation) {
      navigator.geolocation.getCurrentPosition(function (position) {
          initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
          map.setCenter(initialLocation);
      });
-  }
+    }
 
-
-  for(var i in all_markers_json) {
+    for(var i in all_markers_json) {
     var values = all_markers_json[i];
     var latLng = new google.maps.LatLng(values.lat, values.lng);
     var content_string = "<h4><b>" + values.title + "</b></h4>" +
@@ -38,9 +46,36 @@ function initMap() {
   // This event listener will call addMarker() when the map is clicked.
   map.addListener('click', function(event) {
     addMarker(event.latLng);
-  });  
-
+  });
 }
+
+function loadSingleMarkerMap() {
+  console.log(single_marker_json.lat, single_marker_json.lon)
+  
+  var latLng = new google.maps.LatLng(single_marker_json.lat, single_marker_json.lon);
+  
+  map = new google.maps.Map(document.getElementById('marker_map'), {
+    zoom: 14,
+    mapTypeId: google.maps.MapTypeId.STREET,
+    center: latLng
+  });
+
+  
+  var content_string = "<h4><b>" + single_marker_json.title + "</b></h4>" +
+                     "<p>" + single_marker_json.description + "</p>";
+
+  var marker = new google.maps.Marker({
+      position: latLng,
+      map: map,
+      clickable: true,
+  });
+  attachMarkerInfo(marker, content_string);
+
+  // This event listener will call addMarker() when the map is clicked.
+  map.addListener('click', function(event) {
+    addMarker(event.latLng);
+  });
+};
 
 // Adds a marker to the map and push to the array.
 function addMarker(location) {

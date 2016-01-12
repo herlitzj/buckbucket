@@ -11,6 +11,7 @@ class MarkersController < ApplicationController
   # GET /markers/1.json
   def show
     @marker = Marker.find(params[:id])
+    gon.single_marker_json = JSON.parse(@marker.to_json)
   end
 
   # GET /markers/new
@@ -60,6 +61,40 @@ class MarkersController < ApplicationController
       format.html { redirect_to root_path, notice: 'Marker was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def make_payment
+    @marker = Marker.find(params[:id])
+    begin
+      @uri = URI('https://sandbox-api.venmo.com/v1/payments')
+      # @uri = URI('https://api.venmo.com/v1/payments')
+      @params = { :access_token => '7d0fcbbc4a0ca7f4d374996367ff32509cd6df437a22303945f53ad76f1f9411', 
+                  :amount => 0.10, 
+                  :phone => 15555555555, 
+                  :note => "BuckBucket " + @marker.title,
+                  :email => nil,
+                  :uid => nil }
+      @response = Net::HTTP.post_form(@uri, @params)
+      @response_json = JSON.parse(@response.body)
+      if @response_json["error"]
+        flash[:warning] = "There was a problem processing your payment: " +
+                        String(@response_json["error"]["message"]) +
+                        String(@marker.attributes)
+      else
+        flash[:success] = "Payment Processed: " + 
+                          String(@response_json["data"]["payment"]["target"]["user"]["display_name"]).split.map(&:capitalize).join(" ") + 
+                          " successfully paid $" +
+                          String(@response_json["data"]["payment"]["amount"])
+      end
+      redirect_to @marker
+      # render text: @response_json
+    rescue
+      flash[:warning] = "There was a problem processing your payment"
+      render text: @response_json
+      # redirect_to @marker
+    end
+
+    # redirect_to markers_path
   end
 
   private
