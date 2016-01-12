@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
             user.url = auth_hash['info']['urls']['Twitter']
         elsif user.provider == 'facebook'
             user.email = auth_hash['info']['email']
-            user.location = auth_hash['info']['location']
-            user.url = auth_hash['info']['urls']['Facebook']
+            # user.location = auth_hash['info']['location']
+            # user.url = auth_hash['info']['urls']['Facebook']
         end
         user.save!
         user

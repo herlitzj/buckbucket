@@ -10,6 +10,7 @@ class MarkersController < ApplicationController
   # GET /markers/1
   # GET /markers/1.json
   def show
+    @marker = Marker.find(params[:id])
   end
 
   # GET /markers/new
@@ -28,7 +29,7 @@ class MarkersController < ApplicationController
 
     respond_to do |format|
       if @marker.save
-        format.html { redirect_to @marker, notice: 'Marker was successfully created.' }
+        format.html { redirect_to root_path, notice: 'Marker was successfully created.' }
         format.json { render :show, status: :created, location: @marker }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class MarkersController < ApplicationController
   def update
     respond_to do |format|
       if @marker.update(marker_params)
-        format.html { redirect_to @marker, notice: 'Marker was successfully updated.' }
+        format.html { redirect_to root_path, notice: 'Marker saved.' }
         format.json { render :show, status: :ok, location: @marker }
       else
         format.html { render :edit }
@@ -56,7 +57,7 @@ class MarkersController < ApplicationController
   def destroy
     @marker.destroy
     respond_to do |format|
-      format.html { redirect_to markers_url, notice: 'Marker was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Marker was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -69,6 +70,6 @@ class MarkersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def marker_params
-      params[:marker]
+      params.require(:marker).permit(:lat, :lon, :description, :title)
     end
 end

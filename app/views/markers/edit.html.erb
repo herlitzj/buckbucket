@@ -1,6 +1,7 @@
-<h1>Editing Marker</h1>
+<h1>Drop a Buck</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Show', @marker %> |
-<%= link_to 'Back', markers_path %>
+<%= link_to 'Back', markers_path %> | 
+<%= link_to 'Destroy', @marker, method: :delete, data: { confirm: 'Are you sure?' } %>

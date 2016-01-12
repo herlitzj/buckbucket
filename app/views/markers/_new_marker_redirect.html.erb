@@ -1,0 +1,11 @@
+<!-- Deprecated marker form NOT USED -->
+
+<div id="marker_create_form">
+<%= form_for(@initial_marker) do |f|%>
+  <div class="actions">
+    <%= f.text_field :lat, :id => "latitude_field", :style => "display: none" %><br>
+    <%= f.text_field :lon, :id => "longitude_field", :style => "display: none" %><br>
+    <%= f.button "Drop a Buck" %>
+  </div>
+<% end %>
+</div>
