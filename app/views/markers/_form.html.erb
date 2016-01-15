@@ -18,6 +18,7 @@
     <%= f.text_area :description %><br>
     <%= f.text_field :lat, value: params[:lat] %><br>
     <%= f.text_field :lon, value: params[:lng] %><br>
+    <%= f.text_field :user_id, current_user.id %><br>
     <%= f.submit "Submit" %>
   </div>
 <% end %>
