@@ -65,17 +65,12 @@ class MarkersController < ApplicationController
 
   def make_payment
     @marker = Marker.find(params[:id])
+    sellerId = '7d0fcbbc4a0ca7f4d374996367ff32509cd6df437a22303945f53ad76f1f9411'
+    buyerPhone = 15555555555
+    note = @marker.title
+
     begin
-      @uri = URI('https://sandbox-api.venmo.com/v1/payments')
-      # @uri = URI('https://api.venmo.com/v1/payments')
-      @params = { :access_token => '7d0fcbbc4a0ca7f4d374996367ff32509cd6df437a22303945f53ad76f1f9411', 
-                  :amount => 0.10, 
-                  :phone => 15555555555, 
-                  :note => "BuckBucket " + @marker.title,
-                  :email => nil,
-                  :uid => nil }
-      @response = Net::HTTP.post_form(@uri, @params)
-      @response_json = JSON.parse(@response.body)
+      @response_json = VenmoApi.return_venmo_json(sellerId, buyerPhone, note)
       if @response_json["error"]
         flash[:warning] = "There was a problem processing your payment: " +
                         String(@response_json["error"]["message"]) +
@@ -94,7 +89,6 @@ class MarkersController < ApplicationController
       # redirect_to @marker
     end
 
-    # redirect_to markers_path
   end
 
   private
