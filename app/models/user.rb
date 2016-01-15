@@ -13,8 +13,12 @@ class User < ActiveRecord::Base
             user.url = auth_hash['info']['urls']['Twitter']
         elsif user.provider == 'facebook'
             user.email = auth_hash['info']['email']
-            # user.location = auth_hash['info']['location']
-            # user.url = auth_hash['info']['urls']['Facebook']
+        elsif user.provider =='venmo'
+            user.email = auth_hash['info']['email']
+            user.phone = auth_hash['info']['phone']
+            user.venmo_token = auth_hash['credentials']['token']
+            user.venmo_refresh_token = auth_hash['credentials']['refresh_token']
+            user.url = auth_hash['info']['urls']['profile']
         end
         user.save!
         user

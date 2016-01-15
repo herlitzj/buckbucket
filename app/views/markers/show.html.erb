@@ -2,6 +2,12 @@
 
 <h1><%= @marker.title %></h1>
 <h4><%= @marker.description %></h4>
+<%= button_to "Process Payment", action: 'make_payment', method: :post %>
+<div class="container-fluid">
+  <div class="row">
+    <div id="marker_map" style='width: 50%; height: 300px;'></div>
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_marker_path(@marker) %> |
 <%= link_to 'Back', root_path %>
