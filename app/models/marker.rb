@@ -1,5 +1,7 @@
 class Marker < ActiveRecord::Base
     belongs_to :user
+    validates :user_id, presence: true
+    validates :title, length: { maximum: 200 }
 
     def self.extract_markers_json
         all_markers = Marker.all
