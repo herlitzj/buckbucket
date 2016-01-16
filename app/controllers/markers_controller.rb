@@ -31,7 +31,12 @@ class MarkersController < ApplicationController
   # POST /markers
   # POST /markers.json
   def create
-    @marker = current_user.markers.build(marker_params)
+    if current_user.nil?
+      @marker = Marker.new
+      @marker.user_id = 0
+    else
+      @marker = current_user.markers.build(marker_params)
+    end
 
     respond_to do |format|
       if @marker.save

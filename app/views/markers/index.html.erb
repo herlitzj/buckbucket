@@ -16,7 +16,8 @@
       <tr>
         <td><%= link_to marker.title, marker %></td>
         <td><%= marker.description %></td>
-        <% if User.find_by(id: marker.user_id).nil? %>
+        <% if User.find_by(id: marker.user_id).nil? ||
+          User.find_by(id: marker.user_id).id == 0 %>
           <td>Anonymous</td>
         <% else %>
           <td><%= User.find_by(id: marker.user_id).name %></td>
