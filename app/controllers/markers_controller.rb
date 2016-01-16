@@ -26,7 +26,7 @@ class MarkersController < ApplicationController
   # POST /markers
   # POST /markers.json
   def create
-    @marker = Marker.new(marker_params)
+    @marker = current_user.markers.build(marker_params)
 
     respond_to do |format|
       if @marker.save
