@@ -9,5 +9,7 @@
   </div>
 </div>
 
-<%= link_to 'Edit', edit_marker_path(@marker) %> |
-<%= link_to 'Back', root_path %>
+<% if current_user.id == @marker.user_id %>
+    <%= link_to 'Edit Marker', edit_marker_path(@marker) %> |
+<% end %>
+<%= link_to 'Return to Marker List', root_path %>

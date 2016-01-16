@@ -134,4 +134,6 @@ function deleteMarkers() {
   markers = [];
 }
 
-window.onload = initMap;
+// window.onload = initMap;
+$(document).ready(initMap);
+$(document).on('page:load', initMap);
