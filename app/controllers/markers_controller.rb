@@ -21,7 +21,9 @@ class MarkersController < ApplicationController
 
   # GET /markers/1/edit
   def edit
-    if @marker.user_id != current_user.id
+    if current_user.nil?
+      redirect_to root_path 
+    elsif current_user.id != @marker.user_id
       redirect_to root_path
     end
   end
