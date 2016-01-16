@@ -7,5 +7,10 @@ class ApplicationController < ActionController::Base
       @current_user ||= User.find_by(id: session[:user_id])
     end
 
-    helper_method :current_user
+    def marker_owner
+        @marker = Marker.find(params[:id])
+        User.find_by(id: @marker.user_id) == current_user
+    end
+
+    helper_method :current_user, :marker_owner
 end
