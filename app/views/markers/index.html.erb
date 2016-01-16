@@ -7,7 +7,7 @@
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th colspan="3">EDIT</th>
+      <th>Owner</th>
     </tr>
   </thead>
 
@@ -16,8 +16,11 @@
       <tr>
         <td><%= link_to marker.title, marker %></td>
         <td><%= marker.description %></td>
-        <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
-        <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if User.find_by(id: marker.user_id).nil? %>
+          <td>Anonymous</td>
+        <% else %>
+          <td><%= User.find_by(id: marker.user_id).name %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
