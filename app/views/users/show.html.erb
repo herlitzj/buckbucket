@@ -13,26 +13,28 @@
   </ul>
 </div>
 </div>
-<h2>Here are your markers</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th colspan="3">EDIT</th>
-    </tr>
-  </thead>
-<tbody>
-    <% @markers.each do |marker| %>
-      <tr>
-        <td><%= link_to marker.title, marker %></td>
-        <td><%= marker.description %></td>
-        <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
-        <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>    
+<% if @user.id == current_user.id %>
+    <h2>Here are your markers</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th colspan="3">EDIT</th>
+        </tr>
+      </thead>
+    <tbody>
+        <% @markers.each do |marker| %>
+          <tr>
+            <td><%= link_to marker.title, marker %></td>
+            <td><%= marker.description %></td>
+            <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
+            <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>    
+<% end %>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
