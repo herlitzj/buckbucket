@@ -6,10 +6,10 @@
 <div class="panel panel-default">
 <div class="panel-body">
   <ul>
-    <li><strong>Name:</strong> <%= current_user.name %></li>
-    <li><strong>Provider:</strong> <%= current_user.provider %></li>
-    <li><strong>uID:</strong> <%= current_user.uid %></li>
-    <li>UserID: <%= current_user.id %></li>
+    <li><strong>Name:</strong> <%= @user.name %></li>
+    <li><strong>Provider:</strong> <%= @user.provider %></li>
+    <li><strong>uID:</strong> <%= @user.uid %></li>
+    <li><strong>UserID:</strong> <%= @user.id %></li>
   </ul>
 </div>
 </div>
@@ -34,7 +34,7 @@
         <% end %>
       </tbody>
     </table>    
+<%= link_to 'Edit Your User Profile', edit_user_path(@user) %> |
 <% end %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Home', root_path %>
