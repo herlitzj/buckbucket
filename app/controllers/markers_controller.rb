@@ -12,6 +12,8 @@ class MarkersController < ApplicationController
   def show
     @marker = Marker.find(params[:id])
     gon.single_marker_json = JSON.parse(@marker.to_json)
+
+    @claims = ClaimedMarker.where(marker_id: @marker.id)
   end
 
   # GET /markers/new

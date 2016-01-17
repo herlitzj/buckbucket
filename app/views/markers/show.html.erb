@@ -2,7 +2,6 @@
 
 <h1><%= @marker.title %></h1>
 <h4><%= @marker.description %></h4>
-<%= button_to "Process Payment", action: 'make_payment', method: :post %>
 <% if current_user %>
     <%= button_to "Claim Marker", action: 'claim_marker', method: :post %>
 <% end %>
@@ -11,6 +10,32 @@
     <div id="marker_map" style='width: 100%; height: 300px;'></div>
   </div>
 </div>
+
+<% if @claims.count > 0 %>
+    <h3>Marker Claims</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Claimer</th>
+          <th>Claim Time</th>
+          <th>Pay User</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @claims.each do |claim| %>
+        <% @claimer_name = get_user_name(claim.claimer_id) %>
+          <tr>
+            <td><%= @claimer_name %></td>
+            <td><%= format_time(claim.created_at) %></td>
+            <td><%= button_to "Pay " + @claimer_name, action: 'make_payment', method: :post %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+<% end %>
+
+
 
 <% if marker_owner %>
     <%= link_to 'Edit Marker', edit_marker_path(@marker) %> |
