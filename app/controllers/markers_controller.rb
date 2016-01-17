@@ -101,6 +101,21 @@ class MarkersController < ApplicationController
 
   end
 
+  def claim_marker
+    @marker = Marker.find(params[:id])
+    @claimed_marker = ClaimedMarker.new(marker_id: @marker.id, owner_id: @marker.user_id, 
+                                      claimer_id: current_user.id)
+    respond_to do |format|
+      if @claimed_marker.save
+        format.html { redirect_to show_marker_path(@marker), notice: 'Marker was successfully claimed.' }
+        format.json { render :show, status: :created, location: @marker }
+      else
+        format.html { redirect_to show_marker_path(@marker), notice: 'There was an error claiming your marker.' }
+        format.json { render json: @marker.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_marker
