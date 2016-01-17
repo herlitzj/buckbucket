@@ -77,12 +77,13 @@ class MarkersController < ApplicationController
 
   def make_payment
     @marker = Marker.find(params[:id])
-    sellerId = '7d0fcbbc4a0ca7f4d374996367ff32509cd6df437a22303945f53ad76f1f9411'
-    buyerPhone = 15555555555
+    @claim = ClaimedMarker.find(params[:claim_id])
+    @owner = User.find(@claim.owner_id)
+    @claimer = User.find(@claim.claimer_id)
     note = @marker.title
 
     begin
-      @response_json = VenmoApi.return_venmo_json(sellerId, buyerPhone, note)
+      @response_json = VenmoApi.return_venmo_json(@owner.venmo_token, @claimer.phone, note)
       if @response_json["error"]
         flash[:warning] = "There was a problem processing your payment: " +
                         String(@response_json["error"]["message"]) +
