@@ -33,7 +33,7 @@
             <% if marker_owner && !claim.paid %>
             <td><%= button_to "Pay " + @claimer_name, action: 'make_payment', method: :post, :claim_id=> claim.id %></td>
             <% elsif marker_owner && claim.paid %>
-                <p>PAID</p>
+                <td><p>PAID</p></td>
             <% end %>
           </tr>
         <% end %>
