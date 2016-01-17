@@ -18,7 +18,9 @@
         <tr>
           <th>Claimer</th>
           <th>Claim Time</th>
+          <% if current_user %>
           <th>Pay User</th>
+          <% end %>
         </tr>
       </thead>
 
@@ -28,7 +30,9 @@
           <tr>
             <td><%= @claimer_name %></td>
             <td><%= format_time(claim.created_at) %></td>
+            <% if current_user %>
             <td><%= button_to "Pay " + @claimer_name, action: 'make_payment', method: :post, :claim_id=> claim.id %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
