@@ -31,6 +31,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <% if current_user %>
         <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to 'Dashboard', current_user %></li>
           <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
         </ul>
       <% else %>
