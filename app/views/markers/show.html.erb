@@ -2,6 +2,7 @@
 
 <h1><%= @marker.title %></h1>
 <h4><%= @marker.description %></h4>
+<h4><%= number_to_currency(@marker.price) %></h4>
 <% if current_user && ClaimedMarker.find_by(claimer_id: current_user.id).nil? %>
     <%= button_to "Claim Marker", action: 'claim_marker', method: :post %>
 <% end %>
@@ -19,6 +20,7 @@
           <th>Claimer</th>
           <th>Claim Time</th>
           <% if marker_owner %>
+          <th>Price</th>
           <th>Pay User</th>
           <% end %>
         </tr>
@@ -31,8 +33,10 @@
             <td><%= @claimer_name %></td>
             <td><%= format_time(claim.created_at) %></td>
             <% if marker_owner && !claim.paid %>
+            <td><%= number_to_currency(@marker.price) %></td>
             <td><%= button_to "Pay " + @claimer_name, action: 'make_payment', method: :post, :claim_id=> claim.id %></td>
             <% elsif marker_owner && claim.paid %>
+                <td><p>PAID</p></td>
                 <td><p>PAID</p></td>
             <% end %>
           </tr>

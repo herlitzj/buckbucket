@@ -16,6 +16,8 @@
     <%= f.text_field :title %><br>
     <%= f.label :description %><br>
     <%= f.text_area :description %><br>
+    <%= f.label :price %><br>
+    <%= f.text_field :price %><br>
     <%= f.text_field :lat, value: @marker.lat || params[:lat] %><br>
     <%= f.text_field :lon, value: @marker.lon || params[:lng] %><br>
     <%= f.submit "Submit" %>

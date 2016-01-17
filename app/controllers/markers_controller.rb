@@ -81,9 +81,10 @@ class MarkersController < ApplicationController
     @owner = User.find(@claim.owner_id)
     @claimer = User.find(@claim.claimer_id)
     note = @marker.title
+    price = @marker.price
 
     begin
-      @response_json = VenmoApi.return_venmo_json(@owner.venmo_token, @claimer.phone, note)
+      @response_json = VenmoApi.return_venmo_json(@owner.venmo_token, @claimer.phone, note, price)
       if @response_json["error"]
         flash[:warning] = "There was a problem processing your payment: " +
                         String(@response_json["error"]["message"]) +
@@ -93,6 +94,7 @@ class MarkersController < ApplicationController
                           String(@response_json["data"]["payment"]["target"]["user"]["display_name"]).split.map(&:capitalize).join(" ") + 
                           " successfully paid $" +
                           String(@response_json["data"]["payment"]["amount"])
+        ClaimedMarker.set_to_paid(@claim.id)
       end
       redirect_to @marker
       # render text: @response_json
@@ -127,6 +129,6 @@ class MarkersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def marker_params
-      params.require(:marker).permit(:lat, :lon, :description, :title)
+      params.require(:marker).permit(:lat, :lon, :description, :title, :price)
     end
 end
