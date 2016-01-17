@@ -5,5 +5,4 @@ module ApplicationHelper
         time.to_formatted_s(:long)
     end 
 
-    helper_method :format_time
 end
