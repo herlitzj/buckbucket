@@ -9,7 +9,9 @@
   </div>
 </div>
 
-<% if !@marker.user_id.nil? && marker_owner %>
+<% if @marker.user_id != 0 || !@marker.user_id.nil? %>
+    <span></span>
+<% elsif marker_owner %>
     <%= link_to 'Edit Marker', edit_marker_path(@marker) %> |
 <% end %>
 <%= link_to 'Return to Map', root_path %>
