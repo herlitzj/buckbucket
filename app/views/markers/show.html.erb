@@ -2,7 +2,7 @@
 
 <h1><%= @marker.title %></h1>
 <h4><%= @marker.description %></h4>
-<% if current_user %>
+<% if current_user && ClaimedMarker.find_by(claimer_id: current_user.id).nil? %>
     <%= button_to "Claim Marker", action: 'claim_marker', method: :post %>
 <% end %>
 <div class="container-fluid">
