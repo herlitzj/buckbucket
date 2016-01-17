@@ -107,7 +107,7 @@ class MarkersController < ApplicationController
                                       claimer_id: current_user.id)
     respond_to do |format|
       if @claimed_marker.save
-        format.html { redirect_to show_marker_path(@marker), notice: 'Marker was successfully claimed.' }
+        format.html { redirect_to @marker, notice: 'Marker was successfully claimed.' }
         format.json { render :show, status: :created, location: @marker }
       else
         format.html { redirect_to show_marker_path(@marker), notice: 'There was an error claiming your marker.' }
