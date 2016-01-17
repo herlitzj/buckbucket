@@ -20,7 +20,9 @@
         <tr>
           <th>Title</th>
           <th>Description</th>
-          <th colspan="3">EDIT</th>
+          <th>Dropped On</th>
+          <th>Last Edited</th>
+          <th colspan="2">EDIT</th>
         </tr>
       </thead>
     <tbody>
@@ -28,6 +30,8 @@
           <tr>
             <td><%= link_to marker.title, marker %></td>
             <td><%= marker.description %></td>
+            <td><%= marker.created_at %></td>
+            <td><%= marker.updated_at %></td>
             <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
             <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
