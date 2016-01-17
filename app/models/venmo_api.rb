@@ -9,6 +9,10 @@ class VenmoApi
 
     def self.call_venmo_api(sellerId, buyerPhone, note, price)
 
+        #This is the real URI
+        #https://api.venmo.com/v1/payments
+
+        #This is the sandbox URI
         uri = URI('https://sandbox-api.venmo.com/v1/payments')
         params = { :access_token => sellerId, 
                   :amount => price, 
