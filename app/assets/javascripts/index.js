@@ -30,18 +30,19 @@ function loadMainMap() {
     }
 
     for(var i in all_markers_json) {
-    var values = all_markers_json[i];
-    var latLng = new google.maps.LatLng(values.lat, values.lng);
-    var content_string = "<h4><b>" + values.title + "</b></h4>" +
-                     "<p>" + values.description + "</p>" + 
-                     "<a href='/markers/" + values.id + "'>Click Here</a>";
-    var marker = new google.maps.Marker({
-        position: latLng,
-        map: map,
-        clickable: true,
-    });
-    attachMarkerInfo(marker, content_string);
-  };
+      var values = all_markers_json[i];
+      var latLng = new google.maps.LatLng(values.lat, values.lng);
+      var content_string = "<h4><b>" + values.title + "</b></h4>" +
+                       "<p>" + values.description + "</p>" + 
+                       "<a href='/markers/" + values.id + "'>Click Here</a>";
+      var marker = new google.maps.Marker({
+          position: latLng,
+          map: map,
+          clickable: true,
+          icon: values.icon_url
+      });
+      attachMarkerInfo(marker, content_string);
+    };
 
   // This event listener will call addMarker() when the map is clicked.
   map.addListener('click', function(event) {
@@ -71,10 +72,6 @@ function loadSingleMarkerMap() {
   });
   attachMarkerInfo(marker, content_string);
 
-  // This event listener will call addMarker() when the map is clicked.
-  map.addListener('click', function(event) {
-    addMarker(event.latLng);
-  });
 };
 
 // Adds a marker to the map and push to the array.
@@ -134,4 +131,6 @@ function deleteMarkers() {
   markers = [];
 }
 
-window.onload = initMap;
+// window.onload = initMap;
+$(document).ready(initMap);
+$(document).on('page:load', initMap);

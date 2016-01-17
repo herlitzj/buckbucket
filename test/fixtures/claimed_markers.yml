@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  marker_id: 1
+  owner_id: 1
+  claimer_id: 1
+
+two:
+  marker_id: 1
+  owner_id: 1
+  claimer_id: 1

@@ -11,19 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112151825) do
+ActiveRecord::Schema.define(version: 20160117174150) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "claimed_markers", force: :cascade do |t|
+    t.integer  "marker_id",                  null: false
+    t.integer  "owner_id",                   null: false
+    t.integer  "claimer_id",                 null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "paid",       default: false, null: false
+  end
+
   create_table "markers", force: :cascade do |t|
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.float    "lat"
     t.float    "lon"
     t.text     "description"
     t.string   "title"
     t.integer  "user_id"
+    t.decimal  "price",       precision: 5, scale: 2
   end
 
   add_index "markers", ["user_id"], name: "index_markers_on_user_id", using: :btree

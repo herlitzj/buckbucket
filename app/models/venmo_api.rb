@@ -3,18 +3,19 @@ class VenmoApi
 
     attr_accessor :call_venmo_api
 
-    def self.return_venmo_json(sellerId, buyerPhone, note)
-        sellerId = sellerId
-        buyerPhone = buyerPhone
-
-        return call_venmo_api(sellerId, buyerPhone, note)
+    def self.return_venmo_json(sellerId, buyerPhone, note, price)
+        return call_venmo_api(sellerId, buyerPhone, note, price)
     end
 
-    def self.call_venmo_api(sellerId, buyerPhone, note)
+    def self.call_venmo_api(sellerId, buyerPhone, note, price)
 
+        #This is the real URI
+        #https://api.venmo.com/v1/payments
+
+        #This is the sandbox URI
         uri = URI('https://sandbox-api.venmo.com/v1/payments')
         params = { :access_token => sellerId, 
-                  :amount => amount ||= 0.10, 
+                  :amount => price, 
                   :phone => buyerPhone, 
                   :note => note ||= "Buckbucket",
                   :email => email ||= nil,

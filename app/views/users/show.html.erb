@@ -1,4 +1,44 @@
 <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="page-header">
+<h1><%= @user.name %></h1>
+</div>
+<div class="panel panel-default">
+<div class="panel-body">
+  <ul>
+    <li><strong>Name:</strong> <%= @user.name %></li>
+    <li><strong>Provider:</strong> <%= @user.provider %></li>
+    <li><strong>uID:</strong> <%= @user.uid %></li>
+    <li><strong>UserID:</strong> <%= @user.id %></li>
+  </ul>
+</div>
+</div>
+<% if @user.id == current_user.id %>
+    <h2>Here are your markers</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Dropped On</th>
+          <th>Last Edited</th>
+          <th colspan="2">EDIT</th>
+        </tr>
+      </thead>
+    <tbody>
+        <% @markers.each do |marker| %>
+          <tr>
+            <td><%= link_to marker.title, marker %></td>
+            <td><%= marker.description %></td>
+            <td><%= format_time(marker.created_at) %></td>
+            <td><%= format_time(marker.updated_at) %></td>
+            <td><%= link_to 'Edit', edit_marker_path(marker) %></td>
+            <td><%= link_to 'Destroy', marker, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>    
+<%= link_to 'Edit Your User Profile', edit_user_path(@user) %> |
+<% end %>
+
+<%= link_to 'Home', root_path %>
