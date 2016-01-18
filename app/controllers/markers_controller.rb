@@ -76,32 +76,27 @@ class MarkersController < ApplicationController
   end
 
   def make_payment
-    @marker = Marker.find(params[:id])
     @claim = ClaimedMarker.find(params[:claim_id])
-    @owner = User.find(@claim.owner_id)
-    @claimer = User.find(@claim.claimer_id)
-    note = @marker.title
-    price = @marker.price
+    @marker = Marker.find(@claim.marker_id)
 
     begin
-      @response_json = VenmoApi.return_venmo_json(@owner.venmo_token, @claimer.phone, note, price)
+      @response_json = VenmoApi.return_venmo_json(@claim)
       if @response_json["error"]
-        flash[:warning] = "There was a problem processing your payment: " +
-                        String(@response_json["error"]["message"]) +
-                        String(@marker.attributes)
+        flash[:warning] = "There was a problem processing your payment. " +
+                        @response_json["error"]["message"]
       else
-        flash[:success] = "Payment Processed: " + 
-                          String(@response_json["data"]["payment"]["target"]["user"]["display_name"]).split.map(&:capitalize).join(" ") + 
+        flash[:success] = "Payment Processed. " + 
+                          @response_json["data"]["payment"]["target"]["user"]["display_name"].split.map(&:capitalize).join(" ") + 
                           " successfully paid $" +
-                          String(@response_json["data"]["payment"]["amount"])
-        ClaimedMarker.set_to_paid(@claim.id)
+                          @response_json["data"]["payment"]["amount"].to_s
+        ClaimedMarker.set_to_paid(@claim)
       end
       redirect_to @marker
       # render text: @response_json
     rescue
-      flash[:warning] = "There was a problem processing your payment"
-      render text: @response_json
-      # redirect_to @marker
+      flash[:warning] = "There was a problem processing your payment. " + @response_json["error"]["message"]
+      # render text: @response_json
+      redirect_to @marker
     end
 
   end
@@ -129,6 +124,6 @@ class MarkersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def marker_params
-      params.require(:marker).permit(:lat, :lon, :description, :title, :price)
+      params.require(:marker).permit(:lat, :lon, :description, :title, :price, :claim_id)
     end
 end
