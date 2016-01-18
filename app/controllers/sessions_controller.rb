@@ -32,7 +32,7 @@ class SessionsController < ApplicationController
                 redirect_to root_url, notice: "Signed in!"
             else
                 begin
-                    @user = User.create_from_omniauth(auth_hash)
+                    @user = User.create_with_omniauth(auth_hash)
                     session[:user_id] = @user.id
                     flash[:success] = "Welcome to BuckBucket, #{@user.name}!"
                 rescue
