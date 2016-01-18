@@ -33,6 +33,7 @@ class SessionsController < ApplicationController
             else
                 begin
                     @user = User.create_with_omniauth(auth_hash)
+                    @identity.user_id = @user.id
                     session[:user_id] = @user.id
                     flash[:success] = "Welcome to BuckBucket, #{@user.name}!"
                 rescue
