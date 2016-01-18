@@ -3,12 +3,7 @@ class SessionsController < ApplicationController
         auth_hash = request.env['omniauth.auth']
         
         # Find an identity here
-        @identity = Identity.find_with_omniauth(auth_hash)
-
-        # If no identity was found, create a brand new one here
-        if @identity.nil?
-            @identity = Identity.create_with_omniauth(auth_hash)
-        end
+        @identity = Identity.find_or_create_with_omniauth(auth_hash)
 
         if signed_in?
             if @identity.user_id == current_user
