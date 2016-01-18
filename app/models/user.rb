@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
     has_many :identities, dependent: :destroy
 
     def self.create_with_omniauth(auth_hash)
-        user = create()
+        user = User.new()
         user.name ||= auth_hash['info']['name']
         if auth_hash.provider == 'google'
             user.email ||= auth_hash['info']['email']
