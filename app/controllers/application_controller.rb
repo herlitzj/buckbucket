@@ -12,5 +12,14 @@ class ApplicationController < ActionController::Base
         User.find_by(id: @marker.user_id) == current_user
     end
 
-    helper_method :current_user, :marker_owner
+    def signed_in?
+        !!current_user
+    end
+
+    def current_user=(user)
+        @current_user = user
+        session[:user_id] = user.nil? ? nil : user.id
+    end
+
+    helper_method :current_user, :signed_in?, :marker_owner
 end
