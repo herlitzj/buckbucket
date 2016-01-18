@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
                 # The identity is not associated with the current_user so lets 
                 # associate the identity
                 @identity.user_id = current_user
-                @identity.save()
+                @identity.save!
                 redirect_to root_url, notice: "Successfully linked that account!"
             end
         else
@@ -29,6 +29,7 @@ class SessionsController < ApplicationController
                 begin
                     @user = User.create_with_omniauth(auth_hash)
                     @identity.user_id = @user.id
+                    @identity.save!
                     session[:user_id] = @user.id
                     flash[:success] = "Welcome to BuckBucket, #{@user.name}!"
                 rescue
