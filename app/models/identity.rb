@@ -7,8 +7,8 @@ class Identity < ActiveRecord::Base
         if identity.provider == 'venmo'
             identity.venmo_access_token = auth_hash['credentials']['token']
             identity.venmo_refresh_token = auth_hash['credentials']['refresh_token']
-            identity.expires = auth_hash['credentials']['expires_at'].to_s
-            identity.expires_on = Time.now + (auth_hash['credentials']['expires_at'].to_i).seconds
+            #stores expiration date/time as epoch string
+            identity.expires_on = auth_hash['credentials']['expires_at'].to_s
         end
 
         identity.save!
