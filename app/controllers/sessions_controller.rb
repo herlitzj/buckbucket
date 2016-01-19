@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
         @identity = Identity.find_or_create_with_omniauth(auth_hash)
 
         if signed_in?
-            if @identity.user_id == current_user
+            if @identity.user_id == current_user.id
                 # User is signed in so they are trying to link an identity with their
                 # account. But we found the identity and the user associated with it 
                 # is the current user. So the identity is already associated with 
@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
             else
                 # The identity is not associated with the current_user so lets 
                 # associate the identity
-                @identity.user_id = current_user
+                @identity.user_id = current_user.id
                 @identity.save!
                 redirect_to root_url, notice: "Successfully linked that account!"
             end
