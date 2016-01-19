@@ -11,13 +11,15 @@ class SessionsController < ApplicationController
                 # account. But we found the identity and the user associated with it 
                 # is the current user. So the identity is already associated with 
                 # this user. So let's display an error message.
-                redirect_to root_url, notice: "Already linked that account!"
+                flash[:warning] = "Already linked that account!"
+                redirect_to root_url
             else
                 # The identity is not associated with the current_user so lets 
                 # associate the identity
                 @identity.user_id = current_user.id
                 @identity.save!
-                redirect_to root_url, notice: "Successfully linked that account!"
+                flash[:success] = "Successfully linked that account!"
+                redirect_to root_url
             end
         else
             if @identity.user_id.present?
@@ -25,7 +27,8 @@ class SessionsController < ApplicationController
                 # just log them in here
                 @user = User.find(@identity.user_id)
                 session[:user_id] = @user.id
-                redirect_to root_url, notice: "Signed in!"
+                flash[:success] = "Signed in!"
+                redirect_to root_url
             else
                 begin
                     @user = User.create_with_omniauth(auth_hash)
