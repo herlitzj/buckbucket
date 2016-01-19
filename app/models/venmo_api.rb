@@ -7,7 +7,7 @@ class VenmoApi
         marker = Marker.find(claim.marker_id)
         owner = User.find(claim.owner_id)
         claimer = User.find(claim.claimer_id)
-        owner_access_token = Identity.find_by(user_id: owner.id).venmo_access_token
+        owner_access_token = Identity.find_by(user_id: owner.id, provider: "venmo").venmo_access_token
         note = marker.title
         price = marker.price
 
