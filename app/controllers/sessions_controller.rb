@@ -23,7 +23,8 @@ class SessionsController < ApplicationController
             if @identity.user_id.present?
                 # The identity we found had a user associated with it so let's 
                 # just log them in here
-                self.current_user = @identity.user_id
+                @user = User.find(@identity.user_id)
+                session[:user_id] = @user.id
                 redirect_to root_url, notice: "Signed in!"
             else
                 begin
